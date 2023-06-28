@@ -1,0 +1,38 @@
+{% extends '@App/frontend_base.html.twig' %}
+
+{% block title %}OGSales - Basket{% endblock %}
+
+{% block body %}
+
+    <div class="basket-container">
+        <h3>Basket</h3>
+        <ul class="basket-items">
+            {% if user.basket %}
+
+                {% for basketItem in user.basket.basketLines %}
+                    <li class="basket-item">
+                        {#                        <div class="basket-item__image">#}
+                        {#                            <img src="{{ asset('uploads/images/' ~ basketItem.product.image) }}" alt="{{ basketItem.product.name }}">#}
+                        {#                        </div>#}
+                        <div class="basket-item__name">{{ basketItem.product.first.name }}</div>
+                        <div class="basket-item__price">{{ basketItem.product.first.price|number_format(2, '.', ',') }} $</div>
+                        <div class="basket-item__quantity-value">{{ basketItem.quantity }}</div>
+                        <div class="basket-item__total-value">{{ (basketItem.product.first.price * basketItem.quantity)|number_format(2, '.', ',')}} $</div>
+                    </li>
+                {% endfor %}
+            {% else %}
+                <li class="basket-item">
+                    <div class="basket-item__info">
+                        <div class="basket-item__name">Your basket is empty</div>
+                    </div>
+                </li>
+            {% endif %}
+        </ul>
+        {% if user.basket %}
+            <h2>
+                Total {{ user.basket.basketTotal|number_format(2, '.', ',') }} $
+            </h2>
+        {% endif %}
+    </div>
+
+{% endblock %}

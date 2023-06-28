@@ -1,0 +1,24 @@
+{% extends '@App/frontend_base.html.twig' %}
+
+{% block body %}
+    <div class="product-page-container">
+        <div class="catalog-item__image">
+            <img src="#" alt="{{ product.name }}"> {# {{ product.image }} #}
+        </div>
+        <div class="catalog-item__name">{{ product.name }}</div>
+        <div class="catalog-item__price">{{ product.price|number_format(2, '.', ',') }} $</div>
+        <div class="catalog-item__stock">{{ product.stock }}</div>
+        <div class="product-page-basket">
+            <form action="{{ path('basket_add', {'id': product.id}) }}" method="post">
+                <input type="hidden" name="id" value="{{ product.id }}">
+                <input type="hidden" name="name" value="{{ product.name }}">
+                <input type="hidden" name="price" value="{{ product.price }}">
+                <input type="hidden" name="stock" value="{{ product.stock }}">
+                <input type="hidden" name="image" value="{{ product.image }}">
+                <input type="hidden" name="quantity" value="1">
+                <button type="submit" class="btn btn-primary">Add to basket</button>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,26 @@
+{% if form is defined %}
+    <div class="searchbar">
+        {{ form_start(form) }}
+        {{ form_widget(form) }}
+    </div>
+{% endif %}
+<ul class="pagination">
+    <li class="catalog-item catalog-item__header">
+        <div class="catalog-item__image">Image</div>
+        <div class="catalog-item__name">Name</div>
+        <div class="catalog-item__price">Price</div>
+        <div class="catalog-item__stock">Stock</div>
+    </li>
+    {% for product in paginator %}
+        <a href="{{ path('app_frontend_product', {'id': product.id}) }}">
+            <li class="catalog-item">
+                <div class="catalog-item__image">
+                    <img src="#" alt="{{ product.name }}"> {# {{ product.image }} #}
+                </div>
+                <div class="catalog-item__name">{{ product.name }}</div>
+                <div class="catalog-item__price">{{ product.price|number_format(2, '.', ',') }} $</div>
+                <div class="catalog-item__stock">{{ product.stock }}</div>
+            </li>
+        </a>
+    {% endfor %}
+</ul>

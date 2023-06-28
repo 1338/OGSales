@@ -1,0 +1,81 @@
+{% extends '@App/frontend_base.html.twig' %}
+
+{% block title %}OGSales - Orders{% endblock %}
+
+{% block body %}
+    {# loop through pagination as order #}
+    {% for order in pagination %}
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Order #{{ order.id }}</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <h4>Order Details</h4>
+                                <table class="table table-striped">
+                                    <tr>
+                                        <th>Order ID</th>
+                                        <td>{{ order.id }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Order Date</th>
+                                        <td>{{ order.orderDate|date('d/m/Y') }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Order Status</th>
+                                        <td>{{ order.status }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Order Total</th>
+                                        <td>{{ order.orderTotal|number_format(2, '.', ',') }} $</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-md-6">
+                                <h4>Customer Details</h4>
+                                <table class="table table-striped">
+                                    <tr>
+                                        <th>Username</th>
+                                        <td>{{ order.user.username }}</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Customer Email</th>
+                                        <td>{{ order.user.email }}</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h4>Order Items</h4>
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Product Name</th>
+                                            <th>Product Price</th>
+                                            <th>Product Quantity</th>
+                                            <th>Product Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for item in order.orderLines %}
+                                            <tr>
+                                                <td>{{ item.product.name }}</td>
+                                                <td>{{ item.product.price|number_format(2, '.', ',') }} $</td>
+                                                <td>{{ item.quantity }}</td>
+                                                <td>{{ (item.product.price * item.quantity)|number_format(2, '.', ',') }} $</td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
